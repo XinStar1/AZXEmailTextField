@@ -1,9 +1,8 @@
 //
 //  AZXEmailTextField.h
-//  Memory
 //
-//  Created by developer-ai on 16/5/26.
-//  Copyright © 2016年 blueliveMBB. All rights reserved.
+//  Created by xinstar on 16/5/26.
+//  Copyright © 2016年 xinstar1. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -15,6 +14,9 @@
 
 /// 自定义邮箱下拉列表在初始化所设的超类superview中的frame
 - (void)setTableViewFrame:(CGRect)frame;
+
+/// 自定义下拉邮箱提示后缀数组, 如@[@"qq.com", @"126.com", @"gmail.com"]
+- (void)setTableViewSuffixArray:(NSArray *)suffixArray;
 
 /// 隐藏下拉提示
 - (void)hideEmailPrompt;
@@ -39,5 +41,8 @@
 
 /// 设置下拉列表的字体颜色
 - (void)setTableViewTextColor:(UIColor *)color;
+
+/// 设置下拉列表分割线的缩进, 传入一个参数数组[top, left, bottom, right], 分别是上左下右的缩进. 例如@[@1, @2, @3, @4]代表上左下右分别缩进1、2、3、4的距离
+- (void)setSeparatorInsets:(NSArray *)insetArray;
 
 @end

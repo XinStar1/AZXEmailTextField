@@ -28,7 +28,7 @@
             <connections>
                 <outlet property="tapButton" destination="Zbj-ca-YS5" id="pKt-0z-Mpe"/>
             </connections>
-            <point key="canvasLocation" x="463" y="281"/>
+            <point key="canvasLocation" x="635" y="411"/>
         </tableViewCell>
     </objects>
 </document>
