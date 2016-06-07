@@ -1,15 +1,14 @@
 //
 //  AZXEmailTextField.m
-//  Memory
 //
-//  Created by developer-ai on 16/5/26.
-//  Copyright © 2016年 blueliveMBB. All rights reserved.
+//  Created by xinstar1 on 16/5/26.
+//  Copyright © 2016年 xinstar1. All rights reserved.
 //
 
 #import "AZXEmailTextField.h"
 #import "PromptTableViewCell.h"
 
-#define pCellH (self.frame.size.height - 2)
+#define pCellH self.frame.size.height
 
 @interface AZXEmailTextField ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -37,6 +36,9 @@
 // cell的高度
 @property (assign, nonatomic) CGFloat pCellHeight;
 
+// 分割线缩进
+@property (strong, nonatomic) NSArray *pInsetArray;
+
 @end
 
 @implementation AZXEmailTextField
@@ -62,6 +64,7 @@
     [self setUpEmailSuffixArray];
     
     [self.promptTableView registerNib:[UINib nibWithNibName:@"PromptTableViewCell" bundle:nil]    forCellReuseIdentifier:@"promptCell"];
+    self.promptTableView.userInteractionEnabled = YES;
     self.promptTableView.hidden = YES;
     [view addSubview:self.promptTableView];
     
@@ -81,6 +84,9 @@
             self.matchedSuffixArray = self.emailSuffixArray;
         } else {
             self.matchedSuffixArray = [self.emailSuffixArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self beginswith %@", [self deleteSpacesInString:latterStr]]];
+            if (self.matchedSuffixArray.count == 0) {
+                self.promptTableView.hidden = YES;
+            }
         }
         
         [self.promptTableView reloadData];
@@ -131,11 +137,16 @@
 
 - (void)setLeftMargin:(CGFloat)margin {
     self.pLeftMargin = margin;
-//    [self.promptTableView reloadData];
+    [self.promptTableView reloadData];
 }
 
 - (void)hideEmailPrompt {
     self.promptTableView.hidden = YES;
+}
+
+- (void)setTableViewSuffixArray:(NSArray *)suffixArray {
+    self.emailSuffixArray = suffixArray;
+    [self.promptTableView reloadData];
 }
 
 - (CGRect)tableViewFrame {
@@ -144,17 +155,17 @@
 
 - (void)setCellHeight:(CGFloat)height {
     self.pCellHeight = height;
-//    [self.promptTableView reloadData];
+    [self.promptTableView reloadData];
 }
 
 - (void)setTableViewFont:(UIFont *)font {
     self.textFont = font;
-//    [self.promptTableView reloadData];
+    [self.promptTableView reloadData];
 }
 
 - (void)setTableViewTextColor:(UIColor *)color {
     self.color = color;
-//    [self.promptTableView reloadData];
+    [self.promptTableView reloadData];
 }
 
 - (void)setTableViewBackgroundColor:(UIColor *)color {
@@ -163,7 +174,12 @@
 
 - (void)setCellBackgroundColor:(UIColor *)color {
     self.cellColor = color;
-//    [self.promptTableView reloadData];
+    [self.promptTableView reloadData];
+}
+
+- (void)setSeparatorInsets:(NSArray *)insetArray {
+    self.pInsetArray = insetArray;
+    [self.promptTableView reloadData];
 }
 
 #pragma mark - tableView datasource
@@ -186,6 +202,9 @@
     if (self.pCellHeight) {
         rect.size.height = self.pCellHeight;
         cell.emailLabel.frame = rect;
+    } else {
+        rect.size.height = pCellH;
+        cell.emailLabel.frame = rect;
     }
     
     
@@ -193,12 +212,16 @@
     cell.emailLabel.frame = rect;
     cell.tapButton.tag = indexPath.row;
     [cell.tapButton addTarget:self action:@selector(tapCell:) forControlEvents:UIControlEventTouchUpInside];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7 && self.pInsetArray) {
+        cell.separatorInset = UIEdgeInsetsMake([self.pInsetArray[0] floatValue], [self.pInsetArray[1] floatValue], [self.pInsetArray[2] floatValue], [self.pInsetArray[3] floatValue]);
+        NSLog(@"%f %f %f %f", [self.pInsetArray[0] floatValue], [self.pInsetArray[1] floatValue], [self.pInsetArray[2] floatValue], [self.pInsetArray[3] floatValue]);
+    }
     
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.pCellHeight ? self.pCellHeight : 44;
+    return self.pCellHeight ? self.pCellHeight : pCellH;
 }
 
 - (void)tapCell:(UIButton *)sender {

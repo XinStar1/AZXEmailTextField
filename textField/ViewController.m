@@ -3,7 +3,7 @@
 //  textField
 //
 //  Created by xinstar1 on 16/5/27.
-//  Copyright © 2016年 developer-ai. All rights reserved.
+//  Copyright © 2016年 azx. All rights reserved.
 //
 
 // 这个demo展示了用Xib/Storyboard布局时的使用方法，如果是纯代码布局直接用初始化方法就好
@@ -39,7 +39,6 @@
     AZXEmailTextField *textField = [[AZXEmailTextField alloc] initWithFrame:self.placeHolderView.frame InView:self.view];
     textField.placeholder = @"输入用户邮箱";
     textField.backgroundColor = [UIColor lightGrayColor];
-
     [self.view addSubview:textField];
 }
 
