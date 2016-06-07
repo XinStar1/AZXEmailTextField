@@ -1,5 +1,5 @@
 # AZXEmailTextField
-具有邮箱下拉提示textField    
+具有邮箱下拉提示textField，类似微博邮箱登录的效果，输入“@”后出现相应关联邮箱后缀 
 ![image](https://github.com/XinStar1/AZXEmailTextField/blob/master/textFieldResult.gif)
 #使用方法
 如果使用上图默认样式，一句代码搞定(其中View是打算作为自定义textField超类的view，frame是其在View中的frame)
