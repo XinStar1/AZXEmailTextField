@@ -214,7 +214,6 @@
     [cell.tapButton addTarget:self action:@selector(tapCell:) forControlEvents:UIControlEventTouchUpInside];
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7 && self.pInsetArray) {
         cell.separatorInset = UIEdgeInsetsMake([self.pInsetArray[0] floatValue], [self.pInsetArray[1] floatValue], [self.pInsetArray[2] floatValue], [self.pInsetArray[3] floatValue]);
-        NSLog(@"%f %f %f %f", [self.pInsetArray[0] floatValue], [self.pInsetArray[1] floatValue], [self.pInsetArray[2] floatValue], [self.pInsetArray[3] floatValue]);
     }
     
     return cell;
